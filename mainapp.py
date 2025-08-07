@@ -1,7 +1,8 @@
 import sys
 from BlurWindow.blurWindow import GlobalBlur
-from PyQt5.QtGui import QColor, QIcon
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QApplication, QWidget, QVBoxLayout, QSizeGrip
+from PyQt5.QtGui import QColor, QIcon, QPixmap
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QApplication, QWidget, QVBoxLayout, QSizeGrip, \
+    QHBoxLayout, QPushButton, QLabel, QSpacerItem, QSizePolicy
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QObject, QThreadPool, QRunnable
 from pyqt_frameless_window import FramelessMainWindow
 from detailbox import DetailBox
@@ -33,20 +34,61 @@ class MainWindow(FramelessMainWindow):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setStyleSheet('background-color: rgba(0, 0, 0, 0)')
         self.setContentsMargins(0, 0, 0, 0)
-        self.setWindowTitle('WF Prices')
-        self.setWindowIcon('Resources\\Warframe market logo crop.png')
+
+        self.buttons_css = """
+            #close_btn:hover {
+                background-color: rgb(232, 17, 35);
+                border-radius: 5px;
+            }
+            #close_btn:pressed {
+                background-color: rgba(232, 17, 35, 150);
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: rgba(135, 135, 135, 255);
+                border-radius: 5px;
+            }
+            QPushButton:pressed {
+                background-color: rgba(135, 135, 135, 170);
+                border-radius: 5px;
+            }
+        """
+
 
         self.thread_pool = QThreadPool.globalInstance()
         self.box_amount = 12
         self.frame_boxes = {f'{i}': DetailBox(6) for i in range(self.box_amount)}
-        self.title_bar_frame = QFrame()
-        self.boxes_frame = QFrame()
         self.main_frame = QFrame()
+        self.boxes_frame = QFrame()
+
+        self.tbar_frame = QFrame()
+        self.window_icon = QLabel()
+        self.window_icon_pix = QPixmap('Resources\\Warframe market logo crop.png')
+        self.window_icon.setPixmap(self.window_icon_pix)
+        self.window_icon.setScaledContents(True)
+        self.window_title = QLabel("WFM Prices")
+        self.refresh_btn = QPushButton()
+        self.refresh_btn.setIcon(QIcon("Resources\\refresh.png"))
+        self.close_btn = QPushButton()
+        self.close_btn.setObjectName("close_btn")
+        self.close_btn.setIcon(QIcon("Resources\\icons8-close-100.png"))
+        # self.maximize_btn = QPushButton()
+        self.minimize_btn = QPushButton()
+        self.minimize_btn.setIcon(QIcon("Resources\\icons8-minimize-100.png"))
+        self.buttons = [self.refresh_btn, self.minimize_btn, self.close_btn]
+
 
         outer_vlay = QVBoxLayout()
         outer_vlay.setSpacing(0)
         outer_vlay.setContentsMargins(0, 0, 0, 0)
+
         main_grid = QGridLayout()
+        main_grid.setContentsMargins(5, 0, 5, 5)
+
+        tbar_hlay = QHBoxLayout()
+        tbar_hlay.setSpacing(0)
+        tbar_hlay.setContentsMargins(5, 0, 0, 0)
+        tbar_spacer = QSpacerItem(100, 1, QSizePolicy.MinimumExpanding, QSizePolicy.Minimum)
 
 
         with open('items.json', 'r') as file:
@@ -74,10 +116,35 @@ class MainWindow(FramelessMainWindow):
                 col += 1
                 row = 0
 
+        self.close_btn.clicked.connect(lambda: self.close())
+        self.minimize_btn.clicked.connect(lambda: self.showMinimized())
 
-        outer_vlay.addWidget(self.title_bar_frame)
+        self.main_frame.setContentsMargins(0, 0, 0, 0)
+        self.tbar_frame.setContentsMargins(0, 0, 0, 0)
+
+        for i in self.buttons:
+            i.setFixedSize(QSize(30, 30))
+            i.setIconSize(QSize(30, 30))
+            i.setStyleSheet(self.buttons_css)
+
+        self.window_icon.setFixedSize(QSize(30, 30))
+        self.refresh_btn.setFixedSize(QSize(25, 25))
+        self.refresh_btn.setIconSize(QSize(25, 25))
+        self.window_title.setContentsMargins(10, 0, 50, 0)
+
+
+        tbar_hlay.addWidget(self.window_icon)
+        tbar_hlay.addWidget(self.window_title)
+        tbar_hlay.addWidget(self.refresh_btn)
+        tbar_hlay.addItem(tbar_spacer)
+        tbar_hlay.addWidget(self.minimize_btn)
+        tbar_hlay.addWidget(self.close_btn)
+
+        outer_vlay.addWidget(self.tbar_frame)
         outer_vlay.addWidget(self.boxes_frame)
 
+        
+        self.tbar_frame.setLayout(tbar_hlay)
         self.boxes_frame.setLayout(main_grid)
         self.main_frame.setLayout(outer_vlay)
 

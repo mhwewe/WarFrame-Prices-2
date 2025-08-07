@@ -27,7 +27,6 @@ class DetailBox(QFrame):
             QFrame {
                 background-color: rgba(0, 0, 0, 0);
                 border-radius: 5px;
-                border: 1px solid rgba(120, 120, 120, 55);
             }
         """
 
@@ -60,7 +59,7 @@ class DetailBox(QFrame):
             }
         """
 
-        self.search_css = """
+        self.buttons_css = """
             QPushButton {
                 background-color: rgba(0, 0, 0, 0);
                 border-radius: 5px;
@@ -189,7 +188,7 @@ class DetailBox(QFrame):
             i.setFixedSize(22, 22)
             i.setIconSize(QSize(22, 22))
             i.setContentsMargins(0, 0, 0, 0)
-            i.setStyleSheet(self.search_css)
+            i.setStyleSheet(self.buttons_css)
 
         shadow_input = QGraphicsDropShadowEffect(self)
         shadow_input.setColor(QColor(0, 0, 0, 205))

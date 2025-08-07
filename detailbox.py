@@ -14,6 +14,7 @@ class DetailBox(QFrame):
                         QFrame#outerFrame {
                             border-radius: 10px 10px 5px 5px;
                             background-color: rgba(7, 16, 19, 30);
+                            border: 1px solid rgba(120, 120, 120, 55);
                         }
                         QFrame#outerFrame:hover {
                             border-radius: 10px 10px 5px 5px;

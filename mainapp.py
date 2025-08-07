@@ -81,7 +81,11 @@ class MainWindow(QMainWindow):
     def search_item(self, orders_dict: dict, frame):
         orders_dict: dict = orders_dict
         try:
-            for i in range(0, self.frame_boxes['0'].number_listed):
+            list_range = range(0, self.frame_boxes['0'].number_listed)
+            if len(orders_dict['sell']) < self.frame_boxes['0'].number_listed:
+                list_range = range(0, len(orders_dict['sell']))
+
+            for i in list_range:
                 frame.names[i].setText(orders_dict['sell'][i]['ingame_name'])
                 frame.names[i].setAlignment(Qt.AlignmentFlag.AlignLeft)
                 frame.names[i].setAlignment(Qt.AlignmentFlag.AlignVCenter)

@@ -17,7 +17,6 @@ def orders(item_link):
         response = False
     if response:
         raw = response.json()
-
         orders_list: list = []
         for i in raw['payload']['orders']:
             orders_dict: dict = {'order_type': i['order_type'],
@@ -30,11 +29,9 @@ def orders(item_link):
                                  'creation_date': i['creation_date']}
             if orders_dict['status'] == "ingame":
                 orders_list.append(orders_dict)
-
         orders_list = sorted(orders_list, key=itemgetter('platinum'))
         buy_list: list = []
         sell_list: list = []
-        bruh = 's'
 
         for i in orders_list:
             if i['order_type'] == 'buy':

@@ -11,73 +11,75 @@ class DetailBox(QFrame):
 
         self.setObjectName("outerFrame")
         self.frame_css = """
-                        QFrame#outerFrame {
-                            border-radius: 10px 10px 5px 5px;
-                            background-color: rgba(7, 16, 19, 30);
-                            border: 1px solid rgba(120, 120, 120, 55);
-                        }
-                        QFrame#outerFrame:hover {
-                            border-radius: 10px 10px 5px 5px;
-                            background-color: rgba(7, 16, 19, 50);
-                        }
-
+            QFrame#outerFrame {
+                border-radius: 10px 10px 5px 5px;
+                background-color: rgba(7, 16, 19, 30);
+                border: 1px solid rgba(120, 120, 120, 55);
+            }
+            QFrame#outerFrame:hover {
+                border-radius: 10px 10px 5px 5px;
+                background-color: rgba(7, 16, 19, 50);
+            }
         """
-
         self.setStyleSheet(self.frame_css)
 
+        self.interaction_buttons_frame_css = """
+            QFrame {
+                background-color: rgba(0, 0, 0, 0);
+                border-radius: 5px;
+                border: 1px solid rgba(120, 120, 120, 55);
+            }
+        """
+
         self.details_text_css = """
-                            QLabel {
-                                background-color: rgba(0, 0, 0, 0);
-                                border-radius: 0px;
-                                font: 87 12pt "Lato Black";
-                                color: rgb(255, 255, 255);                      
-                            }
-                            """
+            QLabel {
+                background-color: rgba(0, 0, 0, 0);
+                border-radius: 0px;
+                font: 87 12pt "Lato Black";
+                color: rgb(255, 255, 255);                    
+            }
+            """
 
         self.names_css = """
-                        QLabel {
-                            color: rgba(60, 135, 156, 1);
-
-                        }
+            QLabel {
+                color: rgba(60, 135, 156, 1);
+            }
         """
         self.prices_css = """
-                        QLabel {
-                            color: rgba(203, 74, 158, 1);
-
-                        }
+            QLabel {
+                color: rgba(203, 74, 158, 1);
+            }
         """
         self.input_background_css = """
-                    QLineEdit {
-                        background-color: rgba(7, 16, 19, 0);
-                        border-top-left-radius: 10px;
-                        border-top-right-radius: 10px;
-                        border-bottom-left-radius: 10px;
-                        border-bottom-right-radius: 10px;
-                        border: none;
-                        color: rgb(255, 255, 255);
-                        font: 81 16pt "Lato ExtraBold";
-                    }
-                    """
+            QLineEdit {
+                background-color: rgba(7, 16, 19, 0);
+                border: none;
+                color: rgb(255, 255, 255);
+                font: 81 16pt "Lato ExtraBold";
+                
+            }
+        """
 
         self.search_css = """
-                        QPushButton {
-                            background-color: rgba(0, 0, 0, 0);
-
-                        }
-                        QPushButton:hover {
-                            background-color: rgba(135, 135, 135, 255);
-                            border-radius: 5px;
-                        }
-                        QPushButton:pressed {
-                            background-color: rgba(135, 135, 135, 170);
-                            border-radius: 5px;
-                        }
+            QPushButton {
+                background-color: rgba(0, 0, 0, 0);
+                border-radius: 5px;
+            }
+            QPushButton:hover {
+                background-color: rgba(135, 135, 135, 255);
+                border-radius: 5px;
+            }
+            QPushButton:pressed {
+                background-color: rgba(135, 135, 135, 170);
+                border-radius: 5px;
+            }
         """
         self.input_frame_css = """
-                            QFrame#inputFrame {
-                                background-color: rgba(7, 16, 19, 80);
-                                border-radius: 10px;
-                            }
+            QFrame#inputFrame {
+                background-color: rgba(7, 16, 19, 80);
+                border-radius: 10px;
+                
+            }
         """
 
         shadow_main = QGraphicsDropShadowEffect(self)
@@ -132,7 +134,7 @@ class DetailBox(QFrame):
         interaction_buttons_frame = QFrame()
         interaction_buttons_frame.setMaximumWidth(22)
         interaction_buttons_frame.setContentsMargins(0, 0, 0, 0)
-        interaction_buttons_frame.setStyleSheet(self.details_text_css)
+        interaction_buttons_frame.setStyleSheet(self.interaction_buttons_frame_css)
         interaction_buttons_vbox = QVBoxLayout()
         interaction_buttons_vbox.setContentsMargins(0, 5, 0, 0)
         interaction_buttons_spacer = QSpacerItem(0, 0, QSizePolicy.Minimum, QSizePolicy.Expanding)

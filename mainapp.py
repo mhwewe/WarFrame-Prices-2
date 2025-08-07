@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         GlobalBlur(self.winId(), Dark=True)
         # self.setAttribute(Qt.WA_TranslucentBackground)
-        # self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setStyleSheet('background-color: rgba(0, 0, 0, 0)')
         self.setContentsMargins(0, 0, 0, 0)
         self.setWindowTitle('WF Prices')
@@ -72,7 +72,6 @@ class MainWindow(QMainWindow):
             if row == cols:
                 col += 1
                 row = 0
-
 
 
         outer_vlay.addWidget(self.title_bar_frame)

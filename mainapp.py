@@ -1,8 +1,9 @@
 import sys
 from BlurWindow.blurWindow import GlobalBlur
 from PyQt5.QtGui import QColor, QIcon
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QApplication, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QApplication, QWidget, QVBoxLayout, QSizeGrip
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QObject, QThreadPool, QRunnable
+from pyqt_frameless_window import FramelessMainWindow
 from detailbox import DetailBox
 from Api_Orders import orders
 import time
@@ -24,7 +25,7 @@ class Worker(QRunnable):
         self.idk.result.emit(orders_dict, self.frame)
 
 
-class MainWindow(QMainWindow):
+class MainWindow(FramelessMainWindow):
     def __init__(self):
         super().__init__()
         GlobalBlur(self.winId(), Dark=True)
@@ -33,7 +34,7 @@ class MainWindow(QMainWindow):
         self.setStyleSheet('background-color: rgba(0, 0, 0, 0)')
         self.setContentsMargins(0, 0, 0, 0)
         self.setWindowTitle('WF Prices')
-        self.setWindowIcon(QIcon('Resources\\Warframe market logo crop.png'))
+        self.setWindowIcon('Resources\\Warframe market logo crop.png')
 
         self.thread_pool = QThreadPool.globalInstance()
         self.box_amount = 12

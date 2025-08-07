@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QFrame, QLabel, QVBoxLayout, QHBoxLayout, QSizePolic
     QGraphicsDropShadowEffect, QPushButton, QWidget
 from PyQt5.QtCore import Qt, pyqtSignal, QSize
 
-
+test = ''
 class DetailBox(QFrame):
     def __init__(self, number_listed):
         super().__init__()

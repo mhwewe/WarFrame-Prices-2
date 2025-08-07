@@ -1,7 +1,7 @@
 import sys
 from BlurWindow.blurWindow import GlobalBlur
 from PyQt5.QtGui import QColor, QIcon
-from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QApplication, QWidget
+from PyQt5.QtWidgets import QMainWindow, QGridLayout, QFrame, QApplication, QWidget, QVBoxLayout
 from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal, QObject, QThreadPool, QRunnable
 from detailbox import DetailBox
 from Api_Orders import orders
@@ -33,20 +33,24 @@ class MainWindow(QMainWindow):
         self.setStyleSheet('background-color: rgba(0, 0, 0, 0)')
         self.setContentsMargins(0, 0, 0, 0)
         self.setWindowTitle('WF Prices')
-        self.setWindowIcon(QIcon('Resources\\Warframe market logo crop (1).png'))
+        self.setWindowIcon(QIcon('Resources\\Warframe market logo crop.png'))
 
         self.thread_pool = QThreadPool.globalInstance()
         self.box_amount = 12
         self.frame_boxes = {f'{i}': DetailBox(6) for i in range(self.box_amount)}
+        self.title_bar_frame = QFrame()
+        self.boxes_frame = QFrame()
+        self.main_frame = QFrame()
+
+        outer_vlay = QVBoxLayout()
+        outer_vlay.setSpacing(0)
+        outer_vlay.setContentsMargins(0, 0, 0, 0)
+        main_grid = QGridLayout()
 
 
         with open('items.json', 'r') as file:
             items = json.load(file)
             file.close()
-
-
-
-        main_grid = QGridLayout()
         row: int = 0
         col: int = 0
         cols = 3
@@ -70,12 +74,14 @@ class MainWindow(QMainWindow):
                 row = 0
 
 
-        self.threads = []
 
+        outer_vlay.addWidget(self.title_bar_frame)
+        outer_vlay.addWidget(self.boxes_frame)
 
-        main_frame = QFrame(self)
-        main_frame.setLayout(main_grid)
-        self.setCentralWidget(main_frame)
+        self.boxes_frame.setLayout(main_grid)
+        self.main_frame.setLayout(outer_vlay)
+
+        self.setCentralWidget(self.main_frame)
 
 
     def search_item(self, orders_dict: dict, frame):
@@ -87,9 +93,10 @@ class MainWindow(QMainWindow):
 
             for i in list_range:
                 frame.names[i].setText(orders_dict['sell'][i]['ingame_name'])
+                frame.prices[i].setText(str(orders_dict['sell'][i]['platinum']))
                 frame.names[i].setAlignment(Qt.AlignmentFlag.AlignLeft)
                 frame.names[i].setAlignment(Qt.AlignmentFlag.AlignVCenter)
-                frame.prices[i].setText(str(orders_dict['sell'][i]['platinum']))
+
         except Exception:
             for i in range(0, self.frame_boxes['0'].number_listed):
                 frame.names[i].setText('')

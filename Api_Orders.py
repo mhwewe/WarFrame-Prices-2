@@ -34,7 +34,7 @@ def orders(item_link):
         orders_list = sorted(orders_list, key=itemgetter('platinum'))
         buy_list: list = []
         sell_list: list = []
-        bruh = ''
+        bruh = 's'
 
         for i in orders_list:
             if i['order_type'] == 'buy':

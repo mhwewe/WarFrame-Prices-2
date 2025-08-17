@@ -38,6 +38,7 @@ class MainWindow(FramelessMainWindow):
 
 
         screens = app.primaryScreenChanged.connect(lambda: print("hmmmm"))
+        #uh
         # for i in screens:
         #     print(i.logicalDotsPerInch())
         # print(screens)
